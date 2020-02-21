@@ -62,28 +62,37 @@
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
-    <Compile Include="Assets\Scripts\Bullet.cs" />
+    <Compile Include="Assets\Scripts\map\Creater.cs" />
+    <Compile Include="Assets\Scripts\map\DeadZone.cs" />
+    <Compile Include="Assets\Scripts\map\Pillow.cs" />
+    <Compile Include="Assets\Scripts\map\StoneScript.cs" />
+    <Compile Include="Assets\Scripts\mechanism\lever.cs" />
+    <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
+    <Compile Include="Assets\Scripts\Player\Bullet.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\Player_Health\DamageDeal.cs" />
     <Compile Include="Assets\Scripts\Player\Player_Health\HealingCherry.cs" />
     <Compile Include="Assets\Scripts\Player\Player_Health\HealthController.cs" />
-    <Compile Include="Assets\Scripts\StoneScript.cs" />
+    <Compile Include="Assets\Scripts\Units\Enemys\EnemyBullet.cs" />
     <Compile Include="Assets\Scripts\Units\Enemys\Frogg.cs" />
+    <Compile Include="Assets\Scripts\Units\Enemys\Opossum.cs" />
+    <Compile Include="Assets\Scripts\Units\Enemys\Plant.cs" />
+    <Compile Include="Assets\Scripts\Units\Enemys\Slug.cs" />
     <Compile Include="Assets\Scripts\Units\Unit.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>F:/Game_Workshop/Projects/новый_проект/Git/Game/Game/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>F:/Game_Workshop/Projects/новый_проект/Game/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>F:/Game_Workshop/Projects/новый_проект/Git/Game/Game/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>F:/Game_Workshop/Projects/новый_проект/Game/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>F:/Game_Workshop/Projects/новый_проект/Git/Game/Game/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>F:/Game_Workshop/Projects/новый_проект/Game/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>F:/Game_Workshop/Projects/новый_проект/Git/Game/Game/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>F:/Game_Workshop/Projects/новый_проект/Game/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>F:/Game_Workshop/Projects/новый_проект/Git/Game/Game/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>F:/Game_Workshop/Projects/новый_проект/Game/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>F:/Game_Workshop/Tools/2018.4.16f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -284,13 +293,13 @@
       <HintPath>F:/Game_Workshop/Tools/2018.4.16f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-      <HintPath>F:/Game_Workshop/Projects/новый_проект/Git/Game/Game/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+      <HintPath>F:/Game_Workshop/Projects/новый_проект/Game/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>F:/Game_Workshop/Projects/новый_проект/Git/Game/Game/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>F:/Game_Workshop/Projects/новый_проект/Game/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>F:/Game_Workshop/Projects/новый_проект/Git/Game/Game/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+      <HintPath>F:/Game_Workshop/Projects/новый_проект/Game/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>F:/Game_Workshop/Tools/2018.4.16f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

@@ -26,10 +26,17 @@ public class Player : MonoBehaviour
     //необходимо для разворота персонажа в необходимую сторону
     private SpriteRenderer flipCheracter;
 
+    private Vector3 direction;
+
     //Джостик
     [SerializeField] private Joystick control;
 
     /*[SerializeField]*/ private Bullet bullet;
+
+    //Время перезарядки
+    [SerializeField] private float reloadingTime;
+    //Время последнего выстрела
+    private float deltaReloadingTime;
 
 
     //выбираем необходимую анимацию
@@ -45,23 +52,32 @@ public class Player : MonoBehaviour
         animation = GetComponent<Animator>();
         flipCheracter = GetComponent<SpriteRenderer>();
 
+
         bullet = Resources.Load<Bullet>("Bullet");
     }
 
     void Start()
     {
+        deltaReloadingTime = Time.time;
+
     }
 
     void Update()
     {
-        //if (onGround) state = CharState.idle;
-        if (control.Horizontal != 0 || Input.GetAxis("Horizontal") != 0) move();
+        if (control.Horizontal != 0 || Input.GetAxis("Horizontal") != 0)
+        {
+            move();
+        }
         else if (onGround) state = CharState.idle;
 
         //Клавиатура
         if (Input.GetButtonDown("Jump")) jump();
 
-        if (Input.GetButtonDown("Fire1")) StartCoroutine( Shooting());
+        if (Input.GetButton("Fire1") && Time.time > (deltaReloadingTime + reloadingTime))
+        {
+            deltaReloadingTime = Time.time;
+            shoot();
+        }
 
     }
 
@@ -73,11 +89,17 @@ public class Player : MonoBehaviour
 
     //Проверка но соприкосновение с землёй
     #region
-    public Transform checkGround;
-    public LayerMask ground;
+    [SerializeField] private Transform checkGround;
+    [SerializeField] private LayerMask ground;
     private bool onGround = false;
+
+    //проверка есть ли перед игроком стена
+    [SerializeField] private Transform wallCheck;
+    private bool wall;
     private void IsOnGround()
     {
+        wall = Physics2D.OverlapCircle(wallCheck.position + transform.right * 0.5f * direction.x, 0.1f, ground);
+
         onGround = Physics2D.OverlapCircle(checkGround.position, 0.3f, ground);
         if(!onGround) state = CharState.jump;
     }
@@ -96,19 +118,31 @@ public class Player : MonoBehaviour
 
         //джостик
         Vector3 moveVector = Vector3.right * control.Horizontal;
+        direction = Vector3.right * control.Horizontal;
+
 
         //клавиатура
-        if (Input.GetButton("Horizontal")) moveVector = Vector3.right * Input.GetAxis("Horizontal");
+        if (Input.GetButton("Horizontal"))
+        {
+            moveVector = Vector3.right * Input.GetAxis("Horizontal");
+            direction = Vector3.right * Input.GetAxis("Horizontal");
+
+        }
 
         //разварачиваем персонажа в нужную сторону
         flipCheracter.flipX = moveVector.x < 0;
-
+        
+        if(!wall)
         transform.position = Vector3.MoveTowards(transform.position, transform.position + moveVector, moveSpeed * Time.deltaTime);
 
     }
 
+    public void ReciveDamage(Vector3 direction)
+    {
+        rb.velocity = Vector3.zero;
+        rb.AddForce(transform.up * jumpForse, ForceMode2D.Impulse);
+    }
 
-    [SerializeField] float reloadingTime;
     public void shoot()
     {
         Vector3 position = transform.position;
@@ -117,13 +151,9 @@ public class Player : MonoBehaviour
         newBullet.Direction = newBullet.transform.right * (flipCheracter.flipX ? -1.0f : 1.0f);
     }
 
-    public IEnumerator Shooting()
-    {
-        while (Input.GetButton("Fire1"))
-        {
-            shoot();
-            yield return new WaitForSeconds(reloadingTime);
-        }
 
-    }
+    //~Player()
+    //{
+    //    Application.loadedLevel(Application.loadedLevel);
+    //}
 }

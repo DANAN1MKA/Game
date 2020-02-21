@@ -1,65 +1,102 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Frogg : Unit
 {
-    [SerializeField]
-    private float jumpForce;
+    //Сила прыжка
+    [SerializeField] private float jumpForce;
 
-
-    [SerializeField]
-    private HealthController playerHealth;
+    //Сылка на обьект сонтролирующий здоровье игрока
+    [SerializeField] private HealthController playerHealth;
+    GameObject health;
 
     private Rigidbody2D rb;
 
+    //направление перемещения 
+    private Vector3 direction;
+
+    //анимация
+    private Animator anime;
     private SpriteRenderer sprite;
+
+    //задержка между прыжками
+    [SerializeField] private float jumpingCooldown;
+    private float jumpingDeltatime;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
+        anime = GetComponentInChildren<Animator>();
+
+        health = GameObject.Find("HealthController");
+        playerHealth = health.GetComponent<HealthController>();
+
     }
+
     void Start()
     {
-        //StartCoroutine(Move());
+        direction = transform.right;
+        jumpingDeltatime = Time.time;
     }
 
     void Update()
     {
-        //Move();
+        if (Time.time > (jumpingDeltatime + jumpingCooldown))
+        {
+            jumpingDeltatime = Time.time;
+            Move();
+        }
         IsOnGround();
-       Debug.Log(onGround);
     }
 
+    //проверяем нажодится ли лягушка на земле
+    #region
     public LayerMask ground;
     private bool onGround = false;
+
     private void IsOnGround()
     {
-        onGround = Physics2D.OverlapCircle(transform.position, 0.1f, ground);
+        onGround = Physics2D.OverlapCircle(transform.position, 0.01f, ground);
+        if (!onGround) anime.SetInteger("state", 1);
+        else anime.SetInteger("state", 0);
     }
+    #endregion
 
-
+    //наносим урон игроку
     private void OnTriggerEnter2D(Collider2D colision)
     {
         if(colision.CompareTag("Player"))
         {
+            Player tmp = colision.GetComponent<Player>();
+            tmp.ReciveDamage(direction);
+
             Damage();
         }
     }
 
-    [SerializeField] private float MoveDelay;
-
     private void Move()
     {
-        //while (true)
+
+        //проверяем есть ли перед нами препятствие если есть меняем направление движения
+        Collider2D[] coliders = Physics2D.OverlapCircleAll(transform.position + transform.up * 0.5f + transform.right * direction.x, 0.1f);
+        if (coliders.Length > 0 && coliders.All(x => !x.GetComponent<Player>())) direction *= -1.0f;
+
+        if (direction.x > 0) sprite.flipX = true; else sprite.flipX = false;
+
+
+        //ходьба
+        //transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, jumpForce * Time.deltaTime);
+
+        //Прыжки
         if (onGround)
         {
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
-            rb.AddForce(transform.right * jumpForce, ForceMode2D.Impulse);
-
-                //yield return new WaitForSeconds(MoveDelay);
+            rb.AddForce(transform.right * (jumpForce /2) * direction.x, ForceMode2D.Impulse);
         }
+       
     }
 
     private void Damage()

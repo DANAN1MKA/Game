@@ -6,6 +6,13 @@ public class HealingCherry : MonoBehaviour
 {
     [SerializeField] private int healValue;
     [SerializeField] private HealthController healthController;
+    GameObject health;
+
+    void Awake()
+    {
+        health = GameObject.Find("HealthController");
+        healthController = health.GetComponent<HealthController>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

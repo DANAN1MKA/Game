@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class HealthController : MonoBehaviour
 {
     [SerializeField] private int playerHealth;
+    [SerializeField] private int maxHealth;
     [SerializeField] private Text healthText;
 
     public void Start()
@@ -17,7 +18,7 @@ public class HealthController : MonoBehaviour
     {
         healthText.text = playerHealth.ToString("0");
 
-        if (playerHealth > 100) playerHealth = 100;
+        if (playerHealth > maxHealth) playerHealth = maxHealth;
         if (playerHealth <= 0) Application.LoadLevel(Application.loadedLevel);
     }
 
