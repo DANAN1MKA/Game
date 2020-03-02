@@ -36,7 +36,7 @@ public class Creater : MonoBehaviour
 
 
         //загружаем случайный конечный префаб
-        string str3 = "Transition-" + Random.Range(1, amountTransition);
+        string str3 = "Transition-" + Random.Range(1, amountTransition + 1);
         Transition = (GameObject)Instantiate(Resources.Load(str3, typeof(GameObject)));
         Transition.transform.position = jointFromCenterToTransition.position;
     }

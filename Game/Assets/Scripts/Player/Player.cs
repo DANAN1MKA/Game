@@ -73,9 +73,8 @@ public class Player : MonoBehaviour
         //Клавиатура
         if (Input.GetButtonDown("Jump")) jump();
 
-        if (Input.GetButton("Fire1") && Time.time > (deltaReloadingTime + reloadingTime))
+        if (Input.GetButton("Fire1"))
         {
-            deltaReloadingTime = Time.time;
             shoot();
         }
 
@@ -145,10 +144,15 @@ public class Player : MonoBehaviour
 
     public void shoot()
     {
-        Vector3 position = transform.position;
-        Bullet newBullet =  Instantiate(bullet, position, bullet.transform.rotation) as Bullet;
-        newBullet.Damage = bulletDamage;
-        newBullet.Direction = newBullet.transform.right * (flipCheracter.flipX ? -1.0f : 1.0f);
+        if (Time.time > (deltaReloadingTime + reloadingTime))
+        {
+            deltaReloadingTime = Time.time;
+
+            Vector3 position = transform.position;
+            Bullet newBullet = Instantiate(bullet, position, bullet.transform.rotation) as Bullet;
+            newBullet.Damage = bulletDamage;
+            newBullet.Direction = newBullet.transform.right * (flipCheracter.flipX ? -1.0f : 1.0f);
+        }
     }
 
 
